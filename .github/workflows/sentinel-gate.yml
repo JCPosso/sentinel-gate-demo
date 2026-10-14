@@ -59,4 +59,4 @@ jobs:
         run: |
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           node app/scripts/format-pr-comment.cjs app/sentinel-output/report.json "$RUN_URL" > /tmp/pr-comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file /tmp/pr-comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body-file /tmp/pr-comment.md
