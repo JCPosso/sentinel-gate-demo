@@ -12,13 +12,6 @@ const lines = [];
 lines.push("## 🛡️ Sentinel Architect");
 lines.push("");
 
-if (!report.llmValidated) {
-  lines.push(
-    `> ⚠️ Este reporte usó \`${report.llmProvider}\`, un modelo **no validado** (no es el Claude con el que se midió el Kappa de 0.953 en la tesis).`,
-  );
-  lines.push("");
-}
-
 if (report.summary.total === 0) {
   lines.push(`✅ **Conforme** — 0 violaciones encontradas (arquitectura ${report.style}).`);
 } else {
