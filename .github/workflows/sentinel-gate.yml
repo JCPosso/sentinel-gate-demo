@@ -40,6 +40,9 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          # Prueba real de que las reglas custom también funcionan en CI/CD,
+          # no solo en la CLI local — mismo mecanismo, una variable de entorno.
+          SENTINEL_CUSTOM_RULES: sentinel-rules.json
         # continue-on-error a propósito: esto es una demo, no un gate real de
         # producción — el objetivo es mostrar el pipeline corriendo y dejar el
         # dashboard descargable, no bloquear el merge.
