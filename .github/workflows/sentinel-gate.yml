@@ -39,7 +39,11 @@ jobs:
         working-directory: app
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          # NVIDIA_API_KEY fuera: la cuenta de NVIDIA está rota (404 "Function
+          # not found for account", no es nuestro bug — ver commit 9deb50d en
+          # sentinel-architect). selectLlmCaller la revisa antes que OpenRouter
+          # en prioridad, así que dejarla pasar aquí volvería a elegirla.
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           # Prueba real de que las reglas custom también funcionan en CI/CD,
           # no solo en la CLI local — mismo mecanismo, una variable de entorno.
           SENTINEL_CUSTOM_RULES: sentinel-rules.json
