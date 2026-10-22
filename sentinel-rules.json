@@ -1,0 +1,15 @@
+{
+  "rules": [
+    {
+      "style": "hexagonal",
+      "rule": "custom1",
+      "description": "Los adaptadores de infraestructura no deben tener valores de configuración sensibles (claves, credenciales, URLs de servicios externos) escritos directamente en el código.",
+      "violationCriteria": "Un archivo en src/infrastructure/** que define una constante con una clave, token, contraseña o URL de servicio externo escrita literalmente en el código, en vez de leerla de una variable de entorno o configuración inyectada.",
+      "candidateLayers": ["infrastructure"],
+      "plainTitle": "La configuración sensible no va escrita en el código",
+      "plainExplanation": "Las claves, credenciales o URLs de servicios externos no deberían estar escritas directamente en el código fuente — deben venir de variables de entorno o un sistema de configuración.",
+      "qualityAttributes": "Seguridad, Portabilidad",
+      "source": "Regla de ejemplo definida por el usuario para esta demo"
+    }
+  ]
+}

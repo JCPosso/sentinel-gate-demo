@@ -9,6 +9,9 @@ on:
 jobs:
   sentinel-gate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout this app
         uses: actions/checkout@v4
@@ -36,7 +39,14 @@ jobs:
         working-directory: app
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          # NVIDIA_API_KEY fuera: la cuenta de NVIDIA está rota (404 "Function
+          # not found for account", no es nuestro bug — ver commit 9deb50d en
+          # sentinel-architect). selectLlmCaller la revisa antes que OpenRouter
+          # en prioridad, así que dejarla pasar aquí volvería a elegirla.
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # Prueba real de que las reglas custom también funcionan en CI/CD,
+          # no solo en la CLI local — mismo mecanismo, una variable de entorno.
+          SENTINEL_CUSTOM_RULES: sentinel-rules.json
         # continue-on-error a propósito: esto es una demo, no un gate real de
         # producción — el objetivo es mostrar el pipeline corriendo y dejar el
         # dashboard descargable, no bloquear el merge.
@@ -48,3 +58,12 @@ jobs:
         with:
           name: sentinel-dashboard
           path: app/sentinel-output/
+
+      - name: Comment the report summary on the PR
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          node app/scripts/format-pr-comment.cjs app/sentinel-output/report.json "$RUN_URL" > /tmp/pr-comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body-file /tmp/pr-comment.md
