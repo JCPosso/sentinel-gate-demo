@@ -35,21 +35,10 @@ jobs:
         working-directory: sentinel-architect
         run: npm ci
 
-      # NVIDIA y OpenRouter dejaron de responder (cuenta de NVIDIA sin el
-      # permiso "Public API Endpoints"; clave de OpenRouter vencida) — agy
-      # da acceso a Claude real (mismo modelo con el que se midió el Kappa
-      # de 0.953) usando solo GEMINI_API_KEY, sin sesión interactiva.
-      - name: Install Antigravity CLI (agy)
-        run: curl -fsSL https://antigravity.google/cli/install.sh | bash
-
-      - name: Add agy to PATH
-        run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-
       - name: Run the real Sentinel pipeline against this app
         working-directory: app
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           # Prueba real de que las reglas custom también funcionan en CI/CD,
           # no solo en la CLI local — mismo mecanismo, una variable de entorno.
