@@ -17,3 +17,4 @@ npm run dev
 
 - POST /orders — crea una orden (id, customerId, productId, quantity)
 - GET /orders/:id — consulta una orden
+# demo miércoles, 21 de octubre de 2026, 22:13:22 -05
