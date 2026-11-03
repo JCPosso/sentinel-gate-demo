@@ -6,6 +6,7 @@
 > del run en la pestaña Actions. Este código tiene violaciones reales y
 > conocidas (R4, R5) usadas también en la tesis — no se modificó para la demo.
 
+
 Servicio de órdenes con separación de comandos y consultas.
 
 ## Instalación
